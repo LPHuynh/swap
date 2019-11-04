@@ -59,16 +59,6 @@ public:
     : m_core{nullptr}
     , m_vm_HACK{vm}
   {
-  }
-
-  // TODO - get rid of circular dependencies in internals
-  void set_protocol(t_protocol_raw & protocol)
-  {
-    m_core.set_cryptonote_protocol(&protocol);
-  }
-
-  bool run()
-  {
     //initialize core here
     MGINFO("Initializing core...");
 #if defined(PER_BLOCK_CHECKPOINT)
@@ -78,7 +68,7 @@ public:
 #endif
     if (!m_core.init(m_vm_HACK, nullptr, get_checkpoints))
     {
-      return false;
+      throw std::runtime_error("Failed to initialize core");
     }
     MGINFO("Core initialized OK" << ENDL
     << "                                                                                                                                      " << ENDL
@@ -106,6 +96,16 @@ public:
     << "                  @@@@@@@@@@@@@@,                                                                                                     " << ENDL
     << "                                                                                                                                      " << ENDL
     << "                                                                                                                                      " << ENDL);
+  }
+
+  // TODO - get rid of circular dependencies in internals
+  void set_protocol(t_protocol_raw & protocol)
+  {
+    m_core.set_cryptonote_protocol(&protocol);
+  }
+
+  bool run()
+  {
     return true;
   }
 
