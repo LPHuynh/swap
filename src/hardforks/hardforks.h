@@ -30,14 +30,17 @@
 
 #include <stdint.h>
 #include <time.h>
+#include <boost/multiprecision/cpp_int.hpp>
 
 struct hardfork_t
 {
+  typedef boost::multiprecision::uint128_t difficulty_type;
   uint8_t version;
   uint64_t height;
   uint8_t threshold;
   time_t time;
-  hardfork_t(uint8_t version, uint64_t height, uint8_t threshold, time_t time): version(version), height(height), threshold(threshold), time(time) {}
+  difficulty_type diff_reset_value;
+  hardfork_t(uint8_t version, uint64_t height, uint8_t threshold, time_t time, difficulty_type diff_reset_value): version(version), height(height), threshold(threshold), time(time), diff_reset_value(diff_reset_value) {}
 };
 
 extern const hardfork_t mainnet_hard_forks[];
