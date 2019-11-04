@@ -948,17 +948,6 @@ namespace cryptonote
         return 1;
       }
 
-
-    if (arg.blocks.size() + arg.txs.size() > CURRENCY_PROTOCOL_MAX_OBJECT_REQUEST_COUNT)
-      {
-        LOG_ERROR_CCONTEXT(
-            "Requested objects count is too big ("
-            << arg.blocks.size() + arg.txs.size() << ") expected not more then "
-            << CURRENCY_PROTOCOL_MAX_OBJECT_REQUEST_COUNT);
-        drop_connection(context, false, false);
-        return 1;
-      }
-
     NOTIFY_RESPONSE_GET_OBJECTS::request rsp;
     if(!m_core.handle_get_objects(arg, rsp, context))
     {

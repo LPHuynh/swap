@@ -423,7 +423,6 @@ static std::string get_mining_speed(cryptonote::difficulty_type hr)
 {
   double hr_d;
   char prefix;
-  get_metric_prefix(hr, hr_d, prefix);
   if (prefix == 0) return (boost::format("%.0f H/s") % hr).str();
   return (boost::format("%.2f %cH/s") % hr_d % prefix).str();
 }
@@ -1995,7 +1994,7 @@ bool t_rpc_command_executor::alt_chain_info(const std::string &tip, size_t above
         tools::msg_writer() << "Time span: " << tools::get_human_readable_timespan(dt);
         cryptonote::difficulty_type start_difficulty = bhres.block_headers.back().difficulty;
         if (start_difficulty > 0)
-          tools::msg_writer() << "Approximated " << 100.f * DIFFICULTY_TARGET_V2 * chain.length / dt << "% of network hash rate";
+          tools::msg_writer() << "Approximated " << 100.f * DIFFICULTY_TARGET * chain.length / dt << "% of network hash rate";
         else
           tools::fail_msg_writer() << "Bad cmumulative difficulty reported by dameon";
       }

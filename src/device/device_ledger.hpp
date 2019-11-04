@@ -78,7 +78,6 @@ namespace hw {
         ABPkeys(const ABPkeys& keys) ;
         ABPkeys() {index=0;is_subaddress=false;is_change_address=false;additional_key=false;}
         ABPkeys &operator=(const ABPkeys &keys);
-        ABPkeys &operator=(const ABPkeys &keys);
     };
 
     class Keymap {
