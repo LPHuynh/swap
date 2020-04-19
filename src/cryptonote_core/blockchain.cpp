@@ -1014,8 +1014,10 @@ size_t Blockchain::recalculate_difficulties(boost::optional<uint64_t> start_heig
   std::vector<difficulty_type> new_cumulative_difficulties;
   for (uint64_t height = start_height; height <= top_height; ++height)
   {
-    size_t target = get_ideal_hard_fork_version(height) < 2 ? DIFFICULTY_TARGET_V1 : DIFFICULTY_TARGET_V2;
-    difficulty_type recalculated_diff = next_difficulty(timestamps, difficulties, target);
+    size_t target = DIFFICULTY_TARGET;
+    uint64_t last_diff_reset_height = m_hardfork->get_last_diff_reset_height(height);
+    difficulty_type last_diff_reset_value = m_hardfork->get_last_diff_reset_value(height);
+    difficulty_type recalculated_diff = next_difficulty(timestamps, difficulties, target, height, last_diff_reset_height, last_diff_reset_value);
 
     boost::multiprecision::uint256_t recalculated_cum_diff_256 = boost::multiprecision::uint256_t(recalculated_diff) + last_cum_diff;
     CHECK_AND_ASSERT_THROW_MES(recalculated_cum_diff_256 <= std::numeric_limits<difficulty_type>::max(), "Difficulty overflow!");
